@@ -1545,12 +1545,13 @@ MonoBehaviour:
   comboManager: {fileID: 17037311}
   punchTimerDebug: {fileID: 2000600085}
   canPunch: 0
-  isPunching: 0
   punchTimer: 0
   punchKnockbackDirection: 0
   punchComboTimer: 0
-  punchComboTimerStart: 1
-  shootKey: 0
+  punchComboTimerStart: 3
+  savedPunchState: 0
+  numOfClicks: 0
+  shootKey: 323
 --- !u!1 &1726257030
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,8 +24,6 @@ public class ModularPunchingBehavior : MonoBehaviour
     [Header("Checks, Timers, & Values [DON'T CHANGE THESE VALUES]")]
     [SerializeField] public bool canPunch;
     [Tooltip("Sees if the player can punch or not")]
-    [SerializeField] public bool isPunching;
-    [Tooltip("Checks to see if the player is punch so I can pause the combo timer")]
     [SerializeField] public float punchTimer;
     [Tooltip("The time it takes for a punch to reset the can punch timer")]
     [SerializeField] public int punchKnockbackDirection;
@@ -34,7 +32,10 @@ public class ModularPunchingBehavior : MonoBehaviour
     [Tooltip("This is the time it takes for the punch to reset back to the start")]
     [SerializeField] public float punchComboTimerStart;
     [Tooltip("This is the value that sets the time inbetween each punch in a combo")]
+    [SerializeField] public int savedPunchState;
 
+    [SerializeField] public int numOfClicks;
+    [Tooltip("A number to cache the amount of times the player clicks so they can't spam through the attacks")]
 
     [Header("KeyBinds")]
     [SerializeField] KeyCode shootKey;
@@ -44,24 +45,31 @@ public class ModularPunchingBehavior : MonoBehaviour
     {
         punchAnimator = GetComponent<Animator>();
         comboManager = GameObject.Find("Combo Manager").GetComponent<ComboManager>();
+        canPunch = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(shootKey) && canPunch && !isPunching)
+        //Chaches the number of clicks so that the player can't spam and break the animation loop
+        if (Input.GetKeyDown(shootKey))
+        {
+            numOfClicks++;
+        }
+
+        //checks to see if the number of clicks is over the current cache and if the player is able to punch
+        if (numOfClicks >= 1 && canPunch)
         {
             //ADD A FUNCTION HERE TO GRAB FROM A DICTONARY THAT CONTAINS ALL THE VALUES FOR EACH PUNCH IN COMBOS
             canPunch = false;
 
-            StartCoroutine(AdvanceCombo(punchAnimator.GetInteger("CurrentComboStage")));
+            StartCoroutine(AdvanceCombo(savedPunchState));
         }
 
         //This drops the current combo back to the start whenever the timer for the punch ends
         if (punchComboTimer <= 0)
         {
             punchAnimator.SetBool("ComboDropped", true);
-            punchAnimator.SetBool("ComboStart", false);
         }
         else
         {
@@ -72,54 +80,43 @@ public class ModularPunchingBehavior : MonoBehaviour
         //DEBUG FEATURE (simply transfers the time it takes for 
         punchTimerDebug.text = ("Time till drop: " + (Mathf.Round(punchComboTimer * 100.0f) * 0.01f));
 
-        ////System to help identify what weapon the player currently has equipped
-        //switch (Event.current.isKey)
-        //{
-        //    case 1:
-        //        punchAnimator.SetInteger("ComboStartTag",1);
-        //        break;
-        //}
 
+        
     }
 
     IEnumerator AdvanceCombo(int currentPunchState)
     {
         Debug.Log("I have started my punch");
 
-        canPunch = false;
-
-        punchAnimator.SetBool("ComboWait", false);
-
-        if (punchAnimator.GetNextAnimatorStateInfo(0).normalizedTime < 0.7f)
+        //Advances the punch state up the number three then defaults it back to 0 so the player can move through each punch animation
+        if (currentPunchState != 3)
         {
-            punchAnimator.SetBool("hit1", true);
-            punchAnimator.SetBool("hit2", false);
+            currentPunchState++;
         }
-            punchAnimator.SetBool("ComboStart", false);
-            //Advances the punch state up the number three then defaults it back to 0 so the player can move through each punch animation
-            if (currentPunchState != 3)
-            {
-                currentPunchState++;
-            }
-            else
-            {
-                currentPunchState = 1;
-            }
+        else
+        {
+            currentPunchState = 1;
+        }
+
+        //Caches the punch state for later use in the same function
+        savedPunchState = currentPunchState;
 
 
         //Used to set off the Combo timer to whatever it needs to be for the punch in the combo
-        if (!isPunching)
-        {
-            punchComboTimer = punchComboTimerStart;
-        }
+       punchComboTimer = punchComboTimerStart;
+
+        //sets the hit[num] bool so the animation can advance
+        punchAnimator.SetBool("hit" + currentPunchState.ToString(), true);
 
         //A function to wait for the animation to finish before the player can punch again and the state resets to the next one
         yield return new WaitForSeconds((punchAnimator.GetCurrentAnimatorStateInfo(0).length));
 
-        punchAnimator.SetBool("ComboWait", true);
+        canPunch = true;
+
+        numOfClicks = 0;
+
+        punchAnimator.SetBool("hit" + savedPunchState.ToString(), false);
 
         Debug.Log("I have reach the end of my punch");
-
-        canPunch = true;
     }
 }
