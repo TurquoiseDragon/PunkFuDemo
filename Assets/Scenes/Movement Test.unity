@@ -1548,7 +1548,7 @@ MonoBehaviour:
   punchTimer: 0
   punchKnockbackDirection: 0
   punchComboTimer: 0
-  punchComboTimerStart: 3
+  punchComboTimerStart: 2
   savedPunchState: 0
   numOfClicks: 0
   shootKey: 323
