@@ -9,8 +9,6 @@ public class TestEnemy : MonoBehaviour
     [SerializeField] public LayerMask TestingLayer;
     [SerializeField] public GameObject damageNumPrefab;
     [SerializeField] private ComboManager comboManager;
-    [SerializeField] public float comboTimerOffset;
-    [Tooltip("This is the time it takes for the combo to drop")]
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +28,7 @@ public class TestEnemy : MonoBehaviour
         if (other.gameObject.tag == "PlayerHitbox")
         {
             Debug.Log("I got hit 1");
-            comboManager.comboTimer = comboTimerOffset;
+            comboManager.ResetComboTimer();
         }
         else
         {

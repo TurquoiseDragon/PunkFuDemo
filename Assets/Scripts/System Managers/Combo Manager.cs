@@ -11,6 +11,8 @@ public class ComboManager : MonoBehaviour
     [SerializeField] private Slider comboSlider;
     [SerializeField] public float comboTimer;
     [Tooltip("This is the time it takes for the combo to drop")]
+    [SerializeField] public float comboTimerOffset;
+    [Tooltip("This is the time it takes for the combo to drop")]
 
     // Start is called before the first frame update
     void Start()
@@ -29,5 +31,10 @@ public class ComboManager : MonoBehaviour
             combotText.text = "Combo Time: " + (Mathf.Round(comboTimer * 100.0f) * 0.01f);
             comboSlider.value = comboTimer;
         }
+    }
+
+    public void ResetComboTimer()
+    {
+        comboTimer = comboTimerOffset;
     }
 }

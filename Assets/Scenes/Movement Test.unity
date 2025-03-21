@@ -259,6 +259,7 @@ MonoBehaviour:
   combotText: {fileID: 1737126461}
   comboSlider: {fileID: 1102251747}
   comboTimer: 0
+  comboTimerOffset: 3
 --- !u!4 &17037312
 Transform:
   m_ObjectHideFlags: 0
@@ -832,8 +833,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   damageNumPrefab: {fileID: 0}
-  comboManager: {fileID: 0}
-  comboTimerOffset: 0
+  comboManager: {fileID: 17037311}
 --- !u!54 &757633734
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1420,7 +1420,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1545,11 +1545,12 @@ MonoBehaviour:
   comboManager: {fileID: 17037311}
   punchTimerDebug: {fileID: 2000600085}
   canPunch: 0
-  punchTimer: 0
   punchKnockbackDirection: 0
   punchComboTimer: 0
   punchComboTimerStart: 2
   savedPunchState: 0
+  startCheckingAnimation: 0
+  coolDownTimer: 0
   numOfClicks: 0
   shootKey: 323
 --- !u!1 &1726257030
