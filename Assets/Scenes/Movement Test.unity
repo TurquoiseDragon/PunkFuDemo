@@ -1483,7 +1483,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1531257896}
-  - component: {fileID: 1531257897}
   - component: {fileID: 1531257898}
   m_Layer: 0
   m_Name: PunchController
@@ -1508,27 +1507,6 @@ Transform:
   - {fileID: 1830878421}
   m_Father: {fileID: 963194228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1531257897
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1531257895}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f18d6487b828c8c4da1adbd43fec4c89, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1531257898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1541,16 +1519,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047cb0b08d99bc3488c363bb0a261c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  punchAnimator: {fileID: 1531257897}
+  punchAnimator: {fileID: 1830878422}
   comboManager: {fileID: 17037311}
   punchTimerDebug: {fileID: 2000600085}
+  weaponValueContainer: {fileID: 1830878423}
   canPunch: 0
-  punchKnockbackDirection: 0
   punchComboTimer: 0
-  punchComboTimerStart: 2
   savedPunchState: 0
-  startCheckingAnimation: 0
   coolDownTimer: 0
+  punchKnockbackDirection: 0
+  punchDamage: 0
+  knockbackValue: 0
+  punchComboTimerStart: 2
+  waitTimeStart: 0
+  currentWeaponEquiped: 0
   numOfClicks: 0
   shootKey: 323
 --- !u!1 &1726257030
@@ -1740,8 +1722,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1830878421}
+  - component: {fileID: 1830878422}
+  - component: {fileID: 1830878423}
   m_Layer: 0
-  m_Name: HitboxRotator
+  m_Name: LeftRightCombo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1763,6 +1747,53 @@ Transform:
   - {fileID: 1362188236}
   m_Father: {fileID: 1531257896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1830878422
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830878420}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f18d6487b828c8c4da1adbd43fec4c89, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1830878423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830878420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43726e35b920de4b9c8c6afbdcecd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPB: {fileID: 1531257898}
+  hitDamages: 0000000005000000070000000a000000
+  hitKnockbackDirection: 00000000040000000200000001000000
+  hitKnockbackValue: 00000000050000000500000005000000
+  waitTimes:
+  - 0
+  - 1
+  - 1
+  - 1
+  comboDropTimes:
+  - 2
+  - 2
+  - 2
+  - 2
 --- !u!1 &2000600083
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,11 @@ public class TestEnemy : MonoBehaviour
         {
             Debug.Log("I got hit 1");
             comboManager.ResetComboTimer();
+
+            ///DEBUGS FOR ALL VALUES
+            Debug.Log("Current Damage Value of " + other.GetComponentInParent<ModularPunchingBehavior>().savedPunchState + " is " + other.GetComponentInParent<ModularPunchingBehavior>().punchDamage);
+            Debug.Log("Current Knockback Value of " + other.GetComponentInParent<ModularPunchingBehavior>().savedPunchState + " is " + other.GetComponentInParent<ModularPunchingBehavior>().knockbackValue);
+            Debug.Log("Current Knockback Direction of " + other.GetComponentInParent<ModularPunchingBehavior>().savedPunchState + " is " + other.GetComponentInParent<ModularPunchingBehavior>().punchKnockbackDirection);
         }
         else
         {
