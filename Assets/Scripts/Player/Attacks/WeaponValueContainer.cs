@@ -5,17 +5,20 @@ using UnityEngine;
 public class WeaponValueContainer : MonoBehaviour
 {
     [SerializeField] private ModularPunchingBehavior mPB;
+    [SerializeField] private HitboxBehavior hBB;
 
     [Header("Weapon Values")]
     [SerializeField] public List<int> hitDamages = new List<int>();
-    [SerializeField] public List<int> hitKnockbackDirection = new List<int>();
-    [SerializeField] public List<int> hitKnockbackValue = new List<int>();
+    [SerializeField] public List<int> hitKnockbackUp = new List<int>();
+    [SerializeField] public List<int> hitKnockbackFoward = new List<int>();
+    [SerializeField] public List<int> hitKnockbackSide = new List<int>();
     [SerializeField] public List<float> waitTimes = new List<float>();
     [SerializeField] public List<float> comboDropTimes = new List<float>();
 
     private void Start()
     {
-      mPB = GameObject.Find("PunchController").GetComponent<ModularPunchingBehavior>();   
+      mPB = GameObject.Find("PunchController").GetComponent<ModularPunchingBehavior>();
+      hBB = mPB.hitboxBehavior.gameObject.GetComponent<HitboxBehavior>();
     }
 
     public void WeaponValueOutput(int hitValueInput)
@@ -24,12 +27,14 @@ public class WeaponValueContainer : MonoBehaviour
 
         /// Sets the values of the punch to whatever current hit is in the list, this is added in the inspector
 
-        //sets the direction of the punches knockback
-        mPB.punchKnockbackDirection = hitKnockbackDirection[hitValueInput];
+        //Sets the values of the punchs knockback
+        hBB.KnockbackUp = hitKnockbackUp[hitValueInput];
+        hBB.KnockbackFoward = hitKnockbackFoward[hitValueInput];
+        hBB.KnockbackSide = hitKnockbackSide[hitValueInput];
+
         //Sets the values of the punches damage
-        mPB.punchDamage = hitDamages[hitValueInput];
-        //sets the values of the knockback
-        mPB.knockbackValue = hitKnockbackValue[hitValueInput];
+        hBB.punchDamage = hitDamages[hitValueInput];
+
         //sets the time it takes to throw another punch
         mPB.waitTimeStart = waitTimes[hitValueInput];
         //sets the time until the combo is dropped in hit series

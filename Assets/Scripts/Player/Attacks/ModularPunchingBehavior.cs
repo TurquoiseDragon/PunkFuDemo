@@ -10,14 +10,15 @@ public class ModularPunchingBehavior : MonoBehaviour
 {
     /// <summary>
     /// THIS SCRIPT NEEDS TO DO THESE THINGS
-    /// 1. It needs to refer to a dictonary with all the punch movements and combos, damages, and knockbacks
-    /// 2. Allow the player to swap from punches freely but reset the combo
+    /// 1. Allow the player to swap from punches freely but reset the combo
     /// </summary>
 
+    //Switch this when the player switches weapon
     [SerializeField] private Animator punchAnimator;
     [SerializeField] private ComboManager comboManager;
     [SerializeField] private TMP_Text punchTimerDebug;
     [SerializeField] private WeaponValueContainer weaponValueContainer;
+    [SerializeField] public HitboxBehavior hitboxBehavior;
 
     #region Checks & Values
     [Header("Checks, Timers, & Values [DON'T CHANGE THESE VALUES]")]
@@ -33,14 +34,9 @@ public class ModularPunchingBehavior : MonoBehaviour
     [Tooltip("A number to cache the amount of times the player clicks so they can't spam through the attacks")]
     #endregion
 
-    #region Weapon Values
-    [Header("Punch Values [These get changed by the valuecontainer")]
-    [SerializeField] public int punchKnockbackDirection;
-    [Tooltip("A key to easily identify the direction that a punch should go")]
-    [SerializeField] public float punchDamage;
-    [Tooltip("A value to assign to the punch each time it's thrown, it's just the damage of the punch")]
-    [SerializeField] public float knockbackValue;
-    [Tooltip("A value to find how far each punch should knock back enemies (might just be used on death)")]
+    #region Combo Values
+    [Header("Combo Values [These get changed by the valuecontainer")]
+
     [SerializeField] public float punchComboTimerStart;
     [Tooltip("This is the value that sets the time that the player can continue a punch combo without dropping")]
     [SerializeField] public float waitTimeStart;
